@@ -15,7 +15,7 @@ const ProfileCard: React.FC = () => {
           <div className="relative inline-block mb-4 sm:mb-6">
             <div className={`w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border-4 border-black transition-all duration-300 ${isHovered ? 'animate-pulse' : ''} bg-gradient-to-br from-gray-100 to-gray-200`}>
               <img 
-                src="?" 
+                src="https://i.imgur.com/ZEDxoWW.png" 
                 alt="Jesus Reyes Jr. Profile"
                 className="w-full h-full object-cover rounded-full grayscale hover:grayscale-0 transition-all duration-300"
               />
