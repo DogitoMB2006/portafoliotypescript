@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import axios from 'axios'
 import DiscordProfileModal from './DiscordProfileModal'
 
@@ -111,53 +111,57 @@ const SocialLinks: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent rounded-full blur-xl"></div>
           <div className="relative flex justify-center gap-3 sm:gap-4">
             {socialLinks.map((link, index) => (
-              <motion.a
-                key={link.name}
-                href={link.url}
-                className={`
-                  w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-gradient-to-br ${link.color} 
-                  flex items-center justify-center text-black text-base sm:text-lg lg:text-xl
-                  transform transition-all duration-300 hover:scale-110 ${link.hoverColor}
-                  hover:shadow-lg animate-fadeIn border-2 ${link.border}
-                  relative overflow-hidden cursor-pointer
-                `}
-                style={{
-                  animationDelay: `${index * 0.1}s`
-                }}
-                onMouseEnter={() => setHoveredLink(link.name)}
-                onMouseLeave={() => setHoveredLink(null)}
-                onClick={link.onClick || undefined}
-                whileHover={{ 
-                  scale: 1.1,
-                  transition: { type: "spring", stiffness: 400, damping: 10 }
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent"></div>
-                <motion.img 
-                  src={link.icon}
-                  alt={link.name}
-                  className={`relative z-10 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 object-contain transition-transform duration-300 filter grayscale hover:grayscale-0`}
-                  animate={hoveredLink === link.name ? { scale: 1.25 } : { scale: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              </motion.a>
+              <div key={link.name} className="relative">
+                <motion.a
+                  href={link.url}
+                  className={`
+                    w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-gradient-to-br ${link.color} 
+                    flex items-center justify-center text-black text-base sm:text-lg lg:text-xl
+                    transform transition-all duration-300 hover:scale-110 ${link.hoverColor}
+                    hover:shadow-lg animate-fadeIn border-2 ${link.border}
+                    relative overflow-hidden cursor-pointer
+                  `}
+                  style={{
+                    animationDelay: `${index * 0.1}s`
+                  }}
+                  onMouseEnter={() => setHoveredLink(link.name)}
+                  onMouseLeave={() => setHoveredLink(null)}
+                  onClick={link.onClick || undefined}
+                  whileHover={{ 
+                    scale: 1.1,
+                    transition: { type: "spring", stiffness: 400, damping: 10 }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent"></div>
+                  <motion.img 
+                    src={link.icon}
+                    alt={link.name}
+                    className="relative z-10 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 object-contain transition-transform duration-300 filter grayscale hover:grayscale-0"
+                    animate={hoveredLink === link.name ? { scale: 1.25 } : { scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.a>
+                
+                <AnimatePresence>
+                  {hoveredLink === link.name && (
+                    <motion.div 
+                      className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 pointer-events-none"
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <span className="text-white/80 text-xs sm:text-sm font-medium bg-black/60 px-2 py-1 rounded-md backdrop-blur-sm whitespace-nowrap">
+                        {link.name}
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             ))}
           </div>
         </div>
-        
-        {hoveredLink && (
-          <motion.div 
-            className="text-center mt-2 sm:mt-3"
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 5 }}
-          >
-            <span className="text-white/80 text-xs sm:text-sm animate-pulse font-medium">
-              {hoveredLink}
-            </span>
-          </motion.div>
-        )}
       </div>
 
       <DiscordProfileModal
