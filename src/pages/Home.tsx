@@ -12,7 +12,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Manga Background Animation */}
+      
       <div className="absolute inset-0 opacity-20">
         <div 
           className="w-[200%] h-full bg-repeat-x animate-manga-scroll-slow"
@@ -24,7 +24,7 @@ const Home: React.FC = () => {
         ></div>
       </div>
       
-      {/* Dark overlay */}
+      
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/90 to-black/80"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent)] opacity-30"></div>
       <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(45deg,transparent_30%,rgba(255,255,255,0.02)_50%,transparent_70%)] animate-pulse"></div>
